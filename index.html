@@ -188,6 +188,57 @@
       min-height: 100vh;
     }
     
+    /* Mobile Menu Toggle */
+    .mobile-menu-toggle {
+      display: none;
+      position: fixed;
+      top: var(--sp-4);
+      right: var(--sp-4);
+      z-index: 1000;
+      width: 48px;
+      height: 48px;
+      background: var(--glass-bg-solid);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow-neural);
+    }
+
+    .mobile-menu-toggle:active {
+      transform: scale(0.95);
+    }
+
+    .hamburger {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      width: 24px;
+    }
+
+    .hamburger span {
+      display: block;
+      height: 2px;
+      background: var(--emerald-400);
+      border-radius: 2px;
+      transition: all 0.3s var(--ease-out-expo);
+    }
+
+    .mobile-menu-toggle.active .hamburger span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+
+    .mobile-menu-toggle.active .hamburger span:nth-child(2) {
+      opacity: 0;
+      transform: translateX(10px);
+    }
+
+    .mobile-menu-toggle.active .hamburger span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+    
     /* Ultra-Premium Sidebar */
     .sidebar {
       position: sticky;
@@ -1187,22 +1238,6 @@
       gap: var(--sp-6);
     }
     
-    /* Responsive */
-    @media (max-width: 1200px) {
-      .app {
-        grid-template-columns: 1fr;
-      }
-      
-      .sidebar {
-        position: relative;
-        height: auto;
-      }
-      
-      .grid-2 {
-        grid-template-columns: 1fr;
-      }
-    }
-    
     /* Scrollbar */
     ::-webkit-scrollbar {
       width: 10px;
@@ -1249,6 +1284,288 @@
       font-size: 0.95em;
       color: var(--emerald-300);
     }
+
+    /* ============================================
+       RESPONSIVE DESIGN - MOBILE FIRST
+       ============================================ */
+    
+    /* Tablets and below (1200px) */
+    @media (max-width: 1200px) {
+      .app {
+        grid-template-columns: 1fr;
+      }
+
+      .mobile-menu-toggle {
+        display: flex;
+      }
+      
+      .sidebar {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 85%;
+        max-width: 340px;
+        height: 100vh;
+        z-index: 999;
+        transition: left 0.4s var(--ease-out-expo);
+      }
+
+      .sidebar.open {
+        left: 0;
+        box-shadow: 
+          var(--shadow-deep),
+          20px 0 60px rgba(0,0,0,0.8);
+      }
+
+      /* Overlay when menu is open */
+      .sidebar.open::after {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 100%;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0,0,0,0.7);
+        backdrop-filter: blur(4px);
+        z-index: -1;
+      }
+      
+      .main {
+        padding: var(--sp-8) var(--sp-6);
+        padding-top: 80px;
+      }
+
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+
+      .view-header {
+        flex-direction: column;
+        gap: var(--sp-4);
+      }
+
+      .view-title-section h2 {
+        font-size: 28px;
+      }
+    }
+
+    /* Mobile phones (768px) */
+    @media (max-width: 768px) {
+      html {
+        font-size: 14px;
+      }
+
+      .main {
+        padding: var(--sp-6) var(--sp-4);
+        padding-top: 72px;
+      }
+
+      .sidebar {
+        width: 90%;
+        max-width: 300px;
+      }
+
+      .view-title-section h2 {
+        font-size: 24px;
+      }
+
+      .view-title-section p {
+        font-size: 13px;
+      }
+
+      .kpi-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .kpi-value {
+        font-size: 32px;
+      }
+
+      .directive-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+
+      .actions-row {
+        flex-direction: column;
+      }
+
+      .actions-row .btn {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .grid-auto {
+        grid-template-columns: 1fr;
+      }
+
+      .card-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--sp-3);
+      }
+
+      .data-table {
+        font-size: 12px;
+      }
+
+      .data-table th,
+      .data-table td {
+        padding: var(--sp-2) var(--sp-3);
+      }
+
+      /* Make badges wrap better on mobile */
+      .badge {
+        font-size: 10px;
+        padding: var(--sp-1) var(--sp-3);
+      }
+
+      /* Improve chip wrapping */
+      .chip {
+        font-size: 10px;
+        padding: 3px var(--sp-2);
+      }
+
+      /* Better alert spacing on mobile */
+      .alert {
+        padding: var(--sp-3);
+        padding-left: var(--sp-6);
+      }
+
+      .alert h4 {
+        font-size: 12px;
+      }
+
+      .alert p {
+        font-size: 11px;
+      }
+    }
+
+    /* Small mobile (480px) */
+    @media (max-width: 480px) {
+      .mobile-menu-toggle {
+        width: 44px;
+        height: 44px;
+        top: var(--sp-3);
+        right: var(--sp-3);
+      }
+
+      .sidebar {
+        width: 100%;
+        max-width: 100%;
+      }
+
+      .main {
+        padding: var(--sp-4) var(--sp-3);
+        padding-top: 64px;
+      }
+
+      .view-title-section h2 {
+        font-size: 20px;
+      }
+
+      .brand-title h1 {
+        font-size: 16px;
+      }
+
+      .logo-container {
+        width: 48px;
+        height: 48px;
+      }
+
+      .logo {
+        font-size: 24px;
+      }
+
+      .nav-icon {
+        width: 36px;
+        height: 36px;
+        font-size: 16px;
+      }
+
+      .nav-title {
+        font-size: 12px;
+      }
+
+      .nav-desc {
+        font-size: 10px;
+      }
+
+      .kpi-card {
+        padding: var(--sp-4);
+      }
+
+      .kpi-value {
+        font-size: 28px;
+      }
+
+      .card-body {
+        padding: var(--sp-4);
+      }
+
+      .ai-panel {
+        padding: var(--sp-4);
+      }
+
+      .ai-panel h3 {
+        font-size: 14px;
+      }
+    }
+
+    /* Touch device improvements */
+    @media (hover: none) and (pointer: coarse) {
+      .nav-item:active {
+        transform: scale(0.98);
+      }
+
+      .btn:active {
+        transform: scale(0.98);
+      }
+
+      .list-item:active {
+        transform: translateX(2px);
+      }
+
+      /* Remove hover effects on touch devices */
+      .card:hover {
+        transform: none;
+      }
+
+      .kpi-card:hover {
+        transform: none;
+      }
+
+      /* But keep active states for better feedback */
+      .card:active {
+        transform: scale(0.99);
+      }
+
+      .kpi-card:active {
+        transform: scale(0.99);
+      }
+    }
+
+    /* Landscape mobile */
+    @media (max-height: 600px) and (orientation: landscape) {
+      .sidebar {
+        padding: var(--sp-4) var(--sp-4);
+      }
+
+      .brand {
+        margin-bottom: var(--sp-4);
+      }
+
+      .nav-section {
+        margin-bottom: var(--sp-4);
+      }
+
+      .user-section {
+        padding-top: var(--sp-4);
+      }
+    }
   </style>
 </head>
 <body>
@@ -1257,13 +1574,22 @@
   <div class="grid-overlay"></div>
   <div class="scanline"></div>
 
+  <!-- Mobile Menu Toggle -->
+  <div class="mobile-menu-toggle" id="menuToggle">
+    <div class="hamburger">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+
   <div class="app">
     <!-- ULTRA-PREMIUM SIDEBAR -->
-    <aside class="sidebar">
+    <aside class="sidebar" id="sidebar">
       <div class="brand">
         <div class="brand-header">
           <div class="logo-container">
-            <div class="logo"></div>
+            <div class="logo">🛡</div>
             <div class="logo-glow"></div>
           </div>
           <div class="brand-title">
@@ -1828,11 +2154,31 @@
   </div>
 
   <script>
-    // Ultra-smooth navigation system
+    // Ultra-smooth navigation system with mobile support
     document.addEventListener('DOMContentLoaded', function() {
       const navItems = document.querySelectorAll('.nav-item');
       const views = document.querySelectorAll('.view');
+      const menuToggle = document.getElementById('menuToggle');
+      const sidebar = document.getElementById('sidebar');
 
+      // Mobile menu toggle
+      menuToggle.addEventListener('click', function(e) {
+        e.stopPropagation();
+        menuToggle.classList.toggle('active');
+        sidebar.classList.toggle('open');
+      });
+
+      // Close menu when clicking outside
+      document.addEventListener('click', function(e) {
+        if (sidebar.classList.contains('open') && 
+            !sidebar.contains(e.target) && 
+            !menuToggle.contains(e.target)) {
+          sidebar.classList.remove('open');
+          menuToggle.classList.remove('active');
+        }
+      });
+
+      // Navigation items
       navItems.forEach(item => {
         item.addEventListener('click', function() {
           const viewId = 'view-' + this.getAttribute('data-view');
@@ -1850,6 +2196,12 @@
             }, 100);
           }
           
+          // Close mobile menu
+          if (window.innerWidth <= 1200) {
+            sidebar.classList.remove('open');
+            menuToggle.classList.remove('active');
+          }
+          
           // Smooth scroll to top
           window.scrollTo({
             top: 0,
@@ -1858,13 +2210,15 @@
         });
       });
 
-      // Add subtle parallax to background
-      document.addEventListener('mousemove', (e) => {
-        const neuralBg = document.querySelector('.neural-bg');
-        const x = e.clientX / window.innerWidth;
-        const y = e.clientY / window.innerHeight;
-        neuralBg.style.transform = `translate(${x * 20}px, ${y * 20}px) scale(1.05)`;
-      });
+      // Add subtle parallax to background (only on desktop)
+      if (window.innerWidth > 1200) {
+        document.addEventListener('mousemove', (e) => {
+          const neuralBg = document.querySelector('.neural-bg');
+          const x = e.clientX / window.innerWidth;
+          const y = e.clientY / window.innerHeight;
+          neuralBg.style.transform = `translate(${x * 20}px, ${y * 20}px) scale(1.05)`;
+        });
+      }
     });
   </script>
 </body>
